@@ -8,6 +8,8 @@ using System.Security.Principal;
 using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using System.Collections.Immutable;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.VisualBasic;
 
 namespace practice2
 {
@@ -56,7 +58,8 @@ namespace practice2
         public int materialId {get;set;}
         public virtual Material? material {get;set;}
         public float area {get;set;}
-        public string? onSaleSince {get;set;}
+        [Column(TypeName =  "timestamp")]
+        public DateTime onSaleSince {get;set;}
         public virtual List<Rating> ratings {get;set;} = new();
     }
 
@@ -75,7 +78,8 @@ namespace practice2
         [Key]
         public int id {get;set;}
         public virtual Property? property {get;set;}
-        public string? ratedDate {get;set;}
+        [Column(TypeName =  "timestamp")]
+        public DateTime ratedDate {get;set;}
         public virtual Criteria? criteria {get;set;}
         public int rating {get;set;}
     }
@@ -98,7 +102,8 @@ namespace practice2
         [Key]
         public int id {get;set;}
         public virtual Property? property {get;set;}
-        public string? saleDate {get;set;}
+        [Column(TypeName = "timestamp")]
+        public DateTime saleDate {get;set;}
         public virtual Realtor? realtor {get;set;}
         public float price {get;set;}
     }
@@ -157,24 +162,24 @@ namespace practice2
 
                 db.materials.AddRange(material1, material2, material3, material4,material5);
 
-                Property propertyApartment1 = new Property {id = 1, district = district1, address = "Бутовская улица дом 2", floor = 13, roomCount = 2, type = typeApartment, saleStatus = 1, price = 15000000, description = "Двушка в Бирюлево", material = material1, area = 100, onSaleSince = "28.03.2024"};
-                Property propertyApartment2 = new Property {id = 2, district = district2, address = "Ленинский проспект дом 55", floor = 7, roomCount = 3, type = typeApartment, saleStatus = 1, price = 22000000, description = "Трешка с видом на МГУ", material = material3, area = 120, onSaleSince = "28.03.2024"};
-                Property propertyApartment3 = new Property {id = 3, district = district3, address = "проспект Вернадского 85", floor = 10, roomCount = 1, type = typeApartment, saleStatus = 1, price = 10000000, description = "Однушка с ремонтом", material = material3, area = 60, onSaleSince = "28.03.2024"};
-                Property propertyApartment4 = new Property {id = 4, district = district4, address = "улица Мичурина 30", floor = 5, roomCount = 2, type = typeApartment, saleStatus = 1, price = 17000000, description = "Квартира в центре города", material = material5, area = 90, onSaleSince = "28.03.2024"};
-                Property propertyApartment5 = new Property {id = 5, district = district5, address = "улица Баумана 10", floor = 4, roomCount = 3, type = typeApartment, saleStatus = 1, price = 20000000, description = "Трехкомнатная квартира с балконом", material = material5, area = 110, onSaleSince = "28.03.2024"};
-                Property propertyApartment6 = new Property {id = 6, district = district1, address = "улица Лесная 20", floor = 6, roomCount = 2, type = typeApartment, saleStatus = 1, price = 16000000, description = "Уютная квартира со всеми удобствами", material = material3, area = 95, onSaleSince = "28.03.2024"};
-                Property propertyApartment7 = new Property {id = 7, district = district2, address = "проспект Строителей 40", floor = 8, roomCount = 3, type = typeApartment, saleStatus = 1, price = 21000000, description = "Трехкомнатная квартира с ремонтом", material = material1, area = 120, onSaleSince = "28.03.2024"};
-                Property propertyApartment8 = new Property {id = 8, district = district3, address = "улица Жуковского 25", floor = 9, roomCount = 2, type = typeApartment, saleStatus = 1, price = 18000000, description = "Двушка в новом жилом комплексе", material = material1, area = 85, onSaleSince = "28.03.2024"};
-                Property propertyApartment9 = new Property {id = 9, district = district1, address = "улица Арбат", floor = 2, roomCount = 3, type = typeApartment, saleStatus = 1, price = 50000000, description = "Трешка на Арбате", material = material1, area = 200, onSaleSince = "20.03.2024"};
-                Property propertyApartment10 = new Property {id = 10, district = district5, address = "Пятницкое шоссе", floor = 2, roomCount = 2, type = typeApartment, saleStatus = 1, price = 20000000, description = "Двушка в новом жилом комплексе", material = material1, area = 120, onSaleSince = "31.03.2024"};
+                Property propertyApartment1 = new Property {id = 1, district = district1, address = "Бутовская улица дом 2", floor = 13, roomCount = 2, type = typeApartment, saleStatus = 1, price = 15000000, description = "Двушка в Бирюлево", material = material1, area = 100, onSaleSince = new DateTime(2023, 1, 15)};
+                Property propertyApartment2 = new Property {id = 2, district = district2, address = "Ленинский проспект дом 55", floor = 7, roomCount = 3, type = typeApartment, saleStatus = 1, price = 22000000, description = "Трешка с видом на МГУ", material = material3, area = 120, onSaleSince = new DateTime(2023, 3, 8)};
+                Property propertyApartment3 = new Property {id = 3, district = district3, address = "проспект Вернадского 85", floor = 10, roomCount = 1, type = typeApartment, saleStatus = 1, price = 10000000, description = "Однушка с ремонтом", material = material3, area = 60, onSaleSince = new DateTime(2023, 6, 20)};
+                Property propertyApartment4 = new Property {id = 4, district = district4, address = "улица Мичурина 30", floor = 5, roomCount = 2, type = typeApartment, saleStatus = 1, price = 17000000, description = "Квартира в центре города", material = material5, area = 90, onSaleSince = new DateTime(2023, 9, 30)};
+                Property propertyApartment5 = new Property {id = 5, district = district5, address = "улица Баумана 10", floor = 4, roomCount = 3, type = typeApartment, saleStatus = 1, price = 20000000, description = "Трехкомнатная квартира с балконом", material = material5, area = 110, onSaleSince = new DateTime(2024, 3, 17)};
+                Property propertyApartment6 = new Property {id = 6, district = district1, address = "улица Лесная 20", floor = 6, roomCount = 2, type = typeApartment, saleStatus = 1, price = 16000000, description = "Уютная квартира со всеми удобствами", material = material3, area = 95, onSaleSince = new DateTime(2024, 6, 20)};
+                Property propertyApartment7 = new Property {id = 7, district = district2, address = "проспект Строителей 40", floor = 8, roomCount = 3, type = typeApartment, saleStatus = 1, price = 21000000, description = "Трехкомнатная квартира с ремонтом", material = material1, area = 120, onSaleSince = new DateTime(2024, 10, 3)};
+                Property propertyApartment8 = new Property {id = 8, district = district3, address = "улица Жуковского 25", floor = 9, roomCount = 2, type = typeApartment, saleStatus = 1, price = 18000000, description = "Двушка в новом жилом комплексе", material = material1, area = 85, onSaleSince = new DateTime(2024, 12, 20)};
+                Property propertyApartment9 = new Property {id = 9, district = district1, address = "улица Арбат", floor = 2, roomCount = 3, type = typeApartment, saleStatus = 1, price = 50000000, description = "Трешка на Арбате", material = material1, area = 200, onSaleSince = new DateTime(2024, 12, 20)};
+                Property propertyApartment10 = new Property {id = 10, district = district5, address = "Пятницкое шоссе", floor = 2, roomCount = 2, type = typeApartment, saleStatus = 1, price = 20000000, description = "Двушка в новом жилом комплексе", material = material1, area = 120, onSaleSince = new DateTime(2024, 12, 30)};
 
-                Property propertyHouse1 = new Property {id = 11, district = district4, address = "Профсоюзная улица 126", floor = 2, roomCount = 5, type = typeHouse, saleStatus = 1, price = 35000000, description = "Коттедж с участком", material = material1, area = 250, onSaleSince = "28.03.2024"};
-                Property propertyHouse2 = new Property {id = 12, district = district5, address = "улица Ломоносова 50", floor = 3, roomCount = 4, type = typeHouse, saleStatus = 1, price = 28000000, description = "Дом на окраине города", material = material2, area = 180, onSaleSince = "28.03.2024"};
-                Property propertyHouse3 = new Property {id = 13, district = district1, address = "улица Гагарина 12", floor = 1, roomCount = 6, type = typeHouse, saleStatus = 1, price = 45000000, description = "Шикарный особняк рядом с парком", material = material3, area = 350, onSaleSince = "28.03.2024"};
-                Property propertyHouse4 = new Property {id = 14, district = district2, address = "проспект Мира 75", floor = 2, roomCount = 4, type = typeHouse, saleStatus = 1, price = 30000000, description = "Уютный дом с садом", material = material4, area = 200, onSaleSince = "28.03.2024"};
-                Property propertyHouse5 = new Property {id = 15, district = district3, address = "переулок Льва Толстого 5", floor = 2, roomCount = 5, type = typeHouse, saleStatus = 1, price = 35000000, description = "Дворец в центре города", material = material4, area = 300, onSaleSince = "28.03.2024"};
-                Property propertyHouse6 = new Property {id = 16, district = district4, address = "переулок Пушкина 15", floor = 3, roomCount = 4, type = typeHouse, saleStatus = 1, price = 29000000, description = "Дом в экологически чистом районе", material = material2, area = 210, onSaleSince = "28.03.2024"};
-                Property propertyHouse7 = new Property {id = 17, district = district5, address = "улица Революции 7", floor = 2, roomCount = 6, type = typeHouse, saleStatus = 1, price = 40000000, description = "Исторический особняк с видом на реку", material = material1, area = 320, onSaleSince = "28.03.2024"};
+                Property propertyHouse1 = new Property {id = 11, district = district4, address = "Профсоюзная улица 126", floor = 2, roomCount = 5, type = typeHouse, saleStatus = 1, price = 35000000, description = "Коттедж с участком", material = material1, area = 250, onSaleSince = new DateTime(2025, 3, 17)};
+                Property propertyHouse2 = new Property {id = 12, district = district5, address = "улица Ломоносова 50", floor = 3, roomCount = 4, type = typeHouse, saleStatus = 1, price = 28000000, description = "Дом на окраине города", material = material2, area = 180, onSaleSince = new DateTime(2025, 3, 17)};
+                Property propertyHouse3 = new Property {id = 13, district = district1, address = "улица Гагарина 12", floor = 1, roomCount = 6, type = typeHouse, saleStatus = 1, price = 45000000, description = "Шикарный особняк рядом с парком", material = material3, area = 350, onSaleSince = new DateTime(2025, 3, 20)};
+                Property propertyHouse4 = new Property {id = 14, district = district2, address = "проспект Мира 75", floor = 2, roomCount = 4, type = typeHouse, saleStatus = 1, price = 30000000, description = "Уютный дом с садом", material = material4, area = 200, onSaleSince = new DateTime(2025, 6, 30)};
+                Property propertyHouse5 = new Property {id = 15, district = district3, address = "переулок Льва Толстого 5", floor = 2, roomCount = 5, type = typeHouse, saleStatus = 1, price = 35000000, description = "Дворец в центре города", material = material4, area = 300, onSaleSince = new DateTime(2025, 6, 30)};
+                Property propertyHouse6 = new Property {id = 16, district = district4, address = "переулок Пушкина 15", floor = 3, roomCount = 4, type = typeHouse, saleStatus = 1, price = 29000000, description = "Дом в экологически чистом районе", material = material2, area = 210, onSaleSince = new DateTime(2025, 8, 14)};
+                Property propertyHouse7 = new Property {id = 17, district = district5, address = "улица Революции 7", floor = 2, roomCount = 6, type = typeHouse, saleStatus = 1, price = 40000000, description = "Исторический особняк с видом на реку", material = material1, area = 320, onSaleSince = new DateTime(2025, 9, 17)};
                 
                 db.properties.AddRange(propertyApartment1, propertyApartment2, propertyApartment3, propertyApartment4, propertyApartment5, propertyApartment6,  propertyApartment7, propertyApartment8, propertyApartment9, propertyApartment10, propertyHouse1, propertyHouse2, propertyHouse3, propertyHouse4, propertyHouse5, propertyHouse6, propertyHouse7);
 
@@ -187,36 +192,36 @@ namespace practice2
                 db.criteria.AddRange(criteria1, criteria2, criteria3, criteria4);
 
                 // Рейтинг
-                Rating rating1_1 = new Rating {id = 1, criteria = criteria1, property = propertyApartment1, ratedDate = "28.03.2024", rating = 3};
-                Rating rating1_2 = new Rating {id = 2, criteria = criteria2, property = propertyApartment1, ratedDate = "28.03.2024", rating = 2};
-                Rating rating1_3 = new Rating {id = 3, criteria = criteria3, property = propertyApartment1, ratedDate = "28.03.2024", rating = 5};
-                Rating rating1_4 = new Rating {id = 4, criteria = criteria4, property = propertyApartment1, ratedDate = "28.03.2024", rating = 5};
-                Rating rating1_5 = new Rating {id = 5, criteria = criteria5, property = propertyApartment1, ratedDate = "28.03.2024", rating = 3};
+                Rating rating1_1 = new Rating {id = 1, criteria = criteria1, property = propertyApartment1, ratedDate = new DateTime(2024, 03, 28), rating = 3};
+                Rating rating1_2 = new Rating {id = 2, criteria = criteria2, property = propertyApartment1, ratedDate = new DateTime(2024, 03, 28), rating = 2};
+                Rating rating1_3 = new Rating {id = 3, criteria = criteria3, property = propertyApartment1, ratedDate = new DateTime(2024, 03, 28), rating = 5};
+                Rating rating1_4 = new Rating {id = 4, criteria = criteria4, property = propertyApartment1, ratedDate = new DateTime(2024, 03, 28), rating = 5};
+                Rating rating1_5 = new Rating {id = 5, criteria = criteria5, property = propertyApartment1, ratedDate = new DateTime(2024, 03, 28), rating = 3};
 
 
-                Rating rating2_1 = new Rating {id = 6, criteria = criteria1, property = propertyApartment2, ratedDate = "28.03.2024", rating = 4};
-                Rating rating2_2 = new Rating {id = 7, criteria = criteria2, property = propertyApartment2, ratedDate = "28.03.2024", rating = 3};
-                Rating rating2_3 = new Rating {id = 8, criteria = criteria3, property = propertyApartment2, ratedDate = "28.03.2024", rating = 4};
-                Rating rating2_4 = new Rating {id = 9, criteria = criteria4, property = propertyApartment2, ratedDate = "28.03.2024", rating = 4};
-                Rating rating2_5 = new Rating {id = 10, criteria = criteria5, property = propertyApartment2, ratedDate = "28.03.2024", rating = 5};
+                Rating rating2_1 = new Rating {id = 6, criteria = criteria1, property = propertyApartment2, ratedDate = new DateTime(2024, 03, 28), rating = 4};
+                Rating rating2_2 = new Rating {id = 7, criteria = criteria2, property = propertyApartment2, ratedDate = new DateTime(2024, 03, 28), rating = 3};
+                Rating rating2_3 = new Rating {id = 8, criteria = criteria3, property = propertyApartment2, ratedDate = new DateTime(2024, 03, 28), rating = 4};
+                Rating rating2_4 = new Rating {id = 9, criteria = criteria4, property = propertyApartment2, ratedDate = new DateTime(2024, 03, 28), rating = 4};
+                Rating rating2_5 = new Rating {id = 10, criteria = criteria5, property = propertyApartment2, ratedDate = new DateTime(2024, 03, 28), rating = 5};
 
-                Rating rating3_1 = new Rating {id = 11, criteria = criteria1, property = propertyApartment3, ratedDate = "28.03.2024", rating = 4};
-                Rating rating3_2 = new Rating {id = 12, criteria = criteria2, property = propertyApartment3, ratedDate = "28.03.2024", rating = 3};
-                Rating rating3_3 = new Rating {id = 13, criteria = criteria3, property = propertyApartment3, ratedDate = "28.03.2024", rating = 5};
-                Rating rating3_4 = new Rating {id = 14, criteria = criteria4, property = propertyApartment3, ratedDate = "28.03.2024", rating = 4};
-                Rating rating3_5 = new Rating {id = 15, criteria = criteria5, property = propertyApartment3, ratedDate = "28.03.2024", rating = 1};
+                Rating rating3_1 = new Rating {id = 11, criteria = criteria1, property = propertyApartment3, ratedDate = new DateTime(2024, 03, 28), rating = 4};
+                Rating rating3_2 = new Rating {id = 12, criteria = criteria2, property = propertyApartment3, ratedDate = new DateTime(2024, 03, 28), rating = 3};
+                Rating rating3_3 = new Rating {id = 13, criteria = criteria3, property = propertyApartment3, ratedDate = new DateTime(2024, 03, 28), rating = 5};
+                Rating rating3_4 = new Rating {id = 14, criteria = criteria4, property = propertyApartment3, ratedDate = new DateTime(2024, 03, 28), rating = 4};
+                Rating rating3_5 = new Rating {id = 15, criteria = criteria5, property = propertyApartment3, ratedDate = new DateTime(2024, 03, 28), rating = 1};
 
-                Rating rating5_1 = new Rating {id = 16, criteria = criteria1, property = propertyApartment5, ratedDate = "28.03.2024", rating = 5};
-                Rating rating5_2 = new Rating {id = 17, criteria = criteria2, property = propertyApartment5, ratedDate = "28.03.2024", rating = 4};
-                Rating rating5_3 = new Rating {id = 18, criteria = criteria3, property = propertyApartment5, ratedDate = "28.03.2024", rating = 5};
-                Rating rating5_4 = new Rating {id = 19, criteria = criteria4, property = propertyApartment5, ratedDate = "28.03.2024", rating = 5};
-                Rating rating5_5 = new Rating {id = 20, criteria = criteria5, property = propertyApartment5, ratedDate = "28.03.2024", rating = 4};
+                Rating rating5_1 = new Rating {id = 16, criteria = criteria1, property = propertyApartment5, ratedDate = new DateTime(2024, 03, 28), rating = 5};
+                Rating rating5_2 = new Rating {id = 17, criteria = criteria2, property = propertyApartment5, ratedDate = new DateTime(2024, 03, 28), rating = 4};
+                Rating rating5_3 = new Rating {id = 18, criteria = criteria3, property = propertyApartment5, ratedDate = new DateTime(2024, 03, 28), rating = 5};
+                Rating rating5_4 = new Rating {id = 19, criteria = criteria4, property = propertyApartment5, ratedDate = new DateTime(2024, 03, 28), rating = 5};
+                Rating rating5_5 = new Rating {id = 20, criteria = criteria5, property = propertyApartment5, ratedDate = new DateTime(2024, 03, 28), rating = 4};
 
-                Rating rating10_1 = new Rating {id = 21, criteria = criteria1, property = propertyHouse1, ratedDate = "28.03.2024", rating = 5};
-                Rating rating10_2 = new Rating {id = 22, criteria = criteria2, property = propertyHouse1, ratedDate = "28.03.2024", rating = 4};
-                Rating rating10_3 = new Rating {id = 23, criteria = criteria3, property = propertyHouse1, ratedDate = "28.03.2024", rating = 3};
-                Rating rating10_4 = new Rating {id = 24, criteria = criteria4, property = propertyHouse1, ratedDate = "28.03.2024", rating = 2};
-                Rating rating10_5 = new Rating {id = 25, criteria = criteria5, property = propertyHouse1, ratedDate = "28.03.2024", rating = 5};
+                Rating rating10_1 = new Rating {id = 21, criteria = criteria1, property = propertyHouse1, ratedDate = new DateTime(2024, 03, 28), rating = 5};
+                Rating rating10_2 = new Rating {id = 22, criteria = criteria2, property = propertyHouse1, ratedDate = new DateTime(2024, 03, 28), rating = 4};
+                Rating rating10_3 = new Rating {id = 23, criteria = criteria3, property = propertyHouse1, ratedDate = new DateTime(2024, 03, 28), rating = 3};
+                Rating rating10_4 = new Rating {id = 24, criteria = criteria4, property = propertyHouse1, ratedDate = new DateTime(2024, 03, 28), rating = 2};
+                Rating rating10_5 = new Rating {id = 25, criteria = criteria5, property = propertyHouse1, ratedDate = new DateTime(2024, 03, 28), rating = 5};
 
                 db.ratings.AddRange(rating1_1, rating1_2, rating1_3, rating1_4, rating1_5);
                 db.ratings.AddRange(rating2_1, rating2_2, rating2_3, rating2_4, rating2_5);
@@ -237,16 +242,16 @@ namespace practice2
 
                 db.realtors.AddRange(realtor1, realtor2, realtor3, realtor4, realtor5, realtor6, realtor7, realtor8, realtor9, realtor10);
 
-                Sale sale1 = new Sale {id = 1, price = 30000000, property = propertyApartment1, realtor = realtor1, saleDate = "30.03.2024"};
-                Sale sale2 = new Sale {id = 2, price = 25000000, property = propertyApartment2, realtor = realtor1, saleDate = "29.03.2024"};
-                Sale sale3 = new Sale {id = 3, price = 10000000, property = propertyHouse1, realtor = realtor2, saleDate = "31.03.2024"};
-                Sale sale4 = new Sale {id = 4, price = 15000000, property = propertyApartment1, realtor = realtor3, saleDate = "01.04.2024"};
-                Sale sale5 = new Sale {id = 5, price = 40000000, property = propertyApartment4, realtor = realtor3, saleDate = "30.03.2024"};
-                Sale sale6 = new Sale {id = 6, price = 37000000, property = propertyApartment8, realtor = realtor3, saleDate = "30.03.2024"};
-                Sale sale7 = new Sale {id = 7, price = 32000000, property = propertyHouse3, realtor = realtor4, saleDate = "03.04.2024"};
-                Sale sale8 = new Sale {id = 8, price = 40000000, property = propertyHouse7, realtor = realtor1, saleDate = "04.04.2024"};
-                Sale sale9 = new Sale {id = 9, price = 29000000, property = propertyHouse4, realtor = realtor5, saleDate = "20.03.2024"};
-                Sale sale10 = new Sale {id = 10, price = 21000000, property = propertyApartment10, realtor = realtor4, saleDate = "03.04.2024"};
+                Sale sale1 = new Sale {id = 1, price = 30000000, property = propertyApartment1, realtor = realtor1, saleDate = new DateTime(2023, 3, 10)};
+                Sale sale2 = new Sale {id = 2, price = 25000000, property = propertyApartment2, realtor = realtor1, saleDate = new DateTime(2023, 4, 11)};
+                Sale sale3 = new Sale {id = 3, price = 10000000, property = propertyHouse1, realtor = realtor2, saleDate = new DateTime(2024, 1, 2)};
+                Sale sale4 = new Sale {id = 4, price = 15000000, property = propertyApartment1, realtor = realtor3, saleDate = new DateTime(2024, 5, 15)};
+                Sale sale5 = new Sale {id = 5, price = 40000000, property = propertyApartment4, realtor = realtor3, saleDate = new DateTime(2024, 5, 17)};
+                Sale sale6 = new Sale {id = 6, price = 37000000, property = propertyApartment8, realtor = realtor3, saleDate = new DateTime(2024, 8, 20)};
+                Sale sale7 = new Sale {id = 7, price = 32000000, property = propertyHouse3, realtor = realtor4, saleDate = new DateTime(2025, 1, 15)};
+                Sale sale8 = new Sale {id = 8, price = 40000000, property = propertyHouse7, realtor = realtor1, saleDate = new DateTime(2025, 1, 18)};
+                Sale sale9 = new Sale {id = 9, price = 29000000, property = propertyHouse4, realtor = realtor5, saleDate = new DateTime(2025, 4, 30)};
+                Sale sale10 = new Sale {id = 10, price = 21000000, property = propertyApartment10, realtor = realtor4, saleDate = new DateTime(2025, 9, 20)};
 
                 db.sales.AddRange(sale1, sale2, sale3, sale4, sale5, sale6, sale7);
 
@@ -258,7 +263,7 @@ namespace practice2
                 catch (Exception ex)
                 {
                     Console.Write("\n\n\n========\nПроизошла ошибка при попытке записи в базу данных\nТекст ошибки:\n");
-                    Console.Write(ex.Message);
+                    Console.Write(ex);
                     Console.Write("\n========\n\n\n");
                 }
             }
@@ -438,6 +443,32 @@ namespace practice2
                 }
             }
         }
+        public static void query9(string realtorLastName = "Пупкин", string realtorName = "Василий", string realtorPatronym = "Васильевич")
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Console.WriteLine($"Годы, в которые {realtorLastName} {realtorName} {realtorPatronym} продал больше 2 объектов недвижимости\n");
+
+                var successfulYearsForRealtor = from sale in db.sales.ToList()
+                    where sale.realtor!.lastName == realtorLastName &&
+                    sale.realtor!.firstName == realtorName &&
+                    sale.realtor!.patronym == realtorPatronym
+                    group sale by sale.saleDate.Year;
+
+                foreach (var year in successfulYearsForRealtor)
+                {
+                    if (year.Count() > 2)
+                    {
+                        Console.WriteLine($"Год: {year.Key}");
+
+                        foreach (var sale in year)
+                        {
+                            Console.WriteLine(sale.saleDate);
+                        }
+                    }
+                }
+            }
+        }
         public static void query11()
         {
             using (ApplicationContext db = new ApplicationContext())
@@ -474,6 +505,7 @@ namespace practice2
             // query6();
             // query7();
             // query8();
+            // query9();
             // query11();
         }
     }
