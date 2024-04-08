@@ -1,17 +1,6 @@
-﻿using System;
-using System.Dynamic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
-using System.ComponentModel;
-using System.Security.Principal;
-using System.Security.Cryptography;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
-using System.Collections.Immutable;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.VisualBasic;
-using System.Net.NetworkInformation;
-using System.Security.Cryptography.X509Certificates;
 
 namespace practice2
 {
@@ -267,34 +256,6 @@ namespace practice2
                     Console.Write("\n\n\n========\nПроизошла ошибка при попытке записи в базу данных\nТекст ошибки:\n");
                     Console.Write(ex);
                     Console.Write("\n========\n\n\n");
-                }
-            }
-        }
-
-        public static void outputProperties()
-        {
-            using (ApplicationContext db = new ApplicationContext())
-            {
-                // Outputting data  from database into the console
-                var propertiesList = db.properties.ToList();
-                Console.WriteLine("Список недвижимости:");
-
-                foreach (var property in propertiesList)
-                {
-                    Console.WriteLine($"\nОписание: {property.description}, Тип: {property.type!.name}");
-                    Console.WriteLine("Рейтинг:");
-
-                    foreach (var rating in property.ratings)
-                    {
-                        var criteriaName = "";
-
-                        if (rating.criteria != null)
-                        {
-                            criteriaName = rating.criteria.name;
-                        }
-
-                        Console.WriteLine($"{criteriaName} - {rating.rating}");
-                    }
                 }
             }
         }
