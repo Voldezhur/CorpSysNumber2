@@ -543,7 +543,52 @@ namespace practice2
                 }
             }
         }
+        public static void query14()
+        {
 
+        }
+        public static void query15(string propertyAddress = "Бутовская улица дом 2")
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Console.WriteLine($"Средняя оценка по каждому критерию для объекта недвижимости по адресу {propertyAddress}\n");
+
+                var ratingsForProperty = from rating in db.ratings.ToList()
+                    where rating.property!.address == propertyAddress
+                    group rating by rating.criteria into g
+                    select new { criteria = g.Key.name, rating = g.Average(x => x.rating * 20) };
+
+                foreach (var rating in ratingsForProperty)
+                {
+                    Console.Write($"{rating.criteria} - {rating.rating}% - ");
+
+                    if (rating.rating < 60)
+                    {
+                        Console.WriteLine("Неудовлетворительно");
+                    }
+                    else
+                    if (rating.rating >= 60 && rating.rating < 70)
+                    {
+                        Console.WriteLine("Удовлетворительно");
+                    }
+                    else
+                    if (rating.rating >= 70 && rating.rating < 80)
+                    {
+                        Console.WriteLine("Хорошо");
+                    }
+                    else
+                    if (rating.rating >= 80 && rating.rating < 90)
+                    {
+                        Console.WriteLine("Очень хорошо");
+                    }
+                    else
+                    if (rating.rating >= 90)
+                    {
+                        Console.WriteLine("Превосходно");
+                    };
+                }
+            }
+        }
 
         static void Main(string[] args)
         {
@@ -562,8 +607,10 @@ namespace practice2
             // query9();
             // query10();
             // query11();
-            query12();
+            // query12();
             // query13();
+            // query14()
+            query15();
         }
     }
 }
