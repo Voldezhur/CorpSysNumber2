@@ -11,6 +11,7 @@ using System.Collections.Immutable;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.VisualBasic;
 using System.Net.NetworkInformation;
+using System.Security.Cryptography.X509Certificates;
 
 namespace practice2
 {
@@ -545,7 +546,29 @@ namespace practice2
         }
         public static void query14()
         {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Console.WriteLine("Информация о количестве продаж в предыдущем и текущем годах по каждому району, а также процент изменения\n");
 
+                var salesByDistrict = from sale in db.sales.ToList()
+                    where sale.saleDate.Year == 2024 ||
+                        sale.saleDate.Year == 2023
+                    group sale by sale.property!.district into g
+                    select new {
+                        districtName = g.Key.name,
+                        salesCountPrevYear = g.Count(x => x.saleDate.Year == 2023),
+                        salesCountThisYear = g.Count(x => x.saleDate.Year == 2024),
+                        salesIncreasePercentage =  (double)(g.Count(x => x.saleDate.Year == 2024) - g.Count(x => x.saleDate.Year == 2023)) * 100
+                        };
+
+                foreach (var district in salesByDistrict)
+                {
+                    Console.WriteLine($"{district.districtName}:");
+                    Console.WriteLine($"2023: {district.salesCountPrevYear};");
+                    Console.WriteLine($"2024: {district.salesCountThisYear}:");
+                    Console.WriteLine($"Улучшение в процентах: {district.salesIncreasePercentage}:\n");
+                }
+            }
         }
         public static void query15(string propertyAddress = "Бутовская улица дом 2")
         {
@@ -609,8 +632,8 @@ namespace practice2
             // query11();
             // query12();
             // query13();
-            // query14()
-            query15();
+            // query14();
+            // query15();
         }
     }
 }
