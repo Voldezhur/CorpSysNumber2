@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using System.Collections.Immutable;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.VisualBasic;
+using System.Net.NetworkInformation;
 
 namespace practice2
 {
@@ -469,6 +470,25 @@ namespace practice2
                 }
             }
         }
+        public static void query10()
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Console.WriteLine("Годы, в которые было выставлено на продажу 2 или 3 объекта недвижимости\n");
+
+                var yearsWith2or3Properties = from sale in db.sales.ToList()
+                    group sale by sale.saleDate.Year into g
+                    where g.Count() >= 2 &&
+                    g.Count() <= 3
+                    select g;
+                    
+
+                foreach (var saleYear in yearsWith2or3Properties)
+                {
+                    Console.WriteLine(saleYear.Key);
+                }
+            }
+        }
         public static void query11()
         {
             using (ApplicationContext db = new ApplicationContext())
@@ -489,6 +509,27 @@ namespace practice2
                 }
             }
         }
+        public static void query12()
+        {
+            
+        }
+
+        public static void query13(int year = 2024)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Console.WriteLine($"Риэлторы, ничего не продавшие в {year} году\n");
+
+                var unsuccessfulRealtors = from realtor in db.realtors.ToList()
+                    where realtor.sales.Count(x => x.saleDate.Year == 2024) == 0
+                    select realtor;
+
+                foreach (var realtor in unsuccessfulRealtors)
+                {
+                    Console.WriteLine(realtor.lastName);
+                }
+            }
+        }
 
 
         static void Main(string[] args)
@@ -506,7 +547,10 @@ namespace practice2
             // query7();
             // query8();
             // query9();
+            // query10();
             // query11();
+            // query12();
+            query13();
         }
     }
 }
