@@ -511,9 +511,20 @@ namespace practice2
         }
         public static void query12()
         {
-            
-        }
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Console.WriteLine("Адреса недвижимости, где стоимость 1 м^2 меньше средней по району\n");
 
+                var cheapProperties = from property in db.properties.ToList()
+                    where property.district!.properties.Average(x => x.price) > property.price
+                    select property;
+                
+                foreach (var property in cheapProperties)
+                {
+                    Console.WriteLine(property.address);
+                }
+            }
+        }
         public static void query13(int year = 2024)
         {
             using (ApplicationContext db = new ApplicationContext())
@@ -522,11 +533,13 @@ namespace practice2
 
                 var unsuccessfulRealtors = from realtor in db.realtors.ToList()
                     where realtor.sales.Count(x => x.saleDate.Year == 2024) == 0
-                    select realtor;
+                    select new { realtor.lastName, realtor.firstName, realtor.patronym };
 
                 foreach (var realtor in unsuccessfulRealtors)
                 {
-                    Console.WriteLine(realtor.lastName);
+                    Console.Write(realtor.lastName + ' ');
+                    Console.Write(realtor.firstName + ' ');
+                    Console.Write(realtor.patronym + '\n');
                 }
             }
         }
@@ -549,8 +562,8 @@ namespace practice2
             // query9();
             // query10();
             // query11();
-            // query12();
-            query13();
+            query12();
+            // query13();
         }
     }
 }
