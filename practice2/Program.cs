@@ -574,6 +574,21 @@ namespace practice2
             }
         }
 
+        public static void queryNew()
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                var realtorsByYear = from sale in db.sales.ToList()
+                    group sale by new {sale.saleDate.Year, sale.realtor} into g
+                    select new {year = g.Key.Year, realtorCount = g.Count()};
+
+                foreach (var x in realtorsByYear)
+                {
+                    Console.WriteLine(x.year.ToString() + " - " + x.realtorCount);
+                }
+            }
+        }
+
         static void Main(string[] args)
         {
             // Инициализация БД
@@ -595,6 +610,8 @@ namespace practice2
             // query13();
             // query14();
             // query15();
+
+            queryNew();
         }
     }
 }
